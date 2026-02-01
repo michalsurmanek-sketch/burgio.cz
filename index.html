@@ -1,0 +1,524 @@
+<!doctype html>
+<html lang="cs" class="h-full scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BURGIO — tichá značka kvality</title>
+  <meta name="description" content="BURGIO je signatura kvality. Tiché studio a systémová disciplína pro značky, které mají vydržet." />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="BURGIO" />
+  <meta property="og:description" content="Tichá značka kvality. Studio. Systémy. Kurátorství." />
+  <meta property="og:type" content="website" />
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          borderRadius: { xl2: '1.25rem' },
+          boxShadow: {
+            soft: '0 14px 60px rgba(0,0,0,.18)',
+            glow: '0 0 0 1px rgba(255,255,255,.08), 0 18px 80px rgba(0,0,0,.30)',
+          },
+          keyframes: {
+            floaty: { '0%,100%': { transform: 'translateY(0px)' }, '50%': { transform: 'translateY(-10px)' } },
+            fadeUp: { '0%': { opacity: 0, transform: 'translateY(10px)' }, '100%': { opacity: 1, transform: 'translateY(0px)' } },
+            sheen: { '0%': { transform: 'translateX(-120%)' }, '100%': { transform: 'translateX(120%)' } },
+          },
+          animation: {
+            floaty: 'floaty 9s ease-in-out infinite',
+            fadeUp: 'fadeUp .8s ease-out both',
+            sheen: 'sheen 2.8s ease-in-out infinite',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Jemné zrno (bez obrázků) */
+    .grain::before{
+      content:"";
+      position:fixed;
+      inset:-20%;
+      pointer-events:none;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23n)' opacity='.25'/%3E%3C/svg%3E");
+      mix-blend-mode:overlay;
+      opacity:.12;
+      transform:rotate(2deg);
+      z-index:0;
+    }
+
+    /* Lepší fokus pro klávesnici */
+    :focus-visible{ outline: 2px solid rgba(255,255,255,.35); outline-offset: 3px; border-radius: 12px; }
+
+    /* Jemné odlesky na kartách */
+    .card-sheen{ position:relative; overflow:hidden; }
+    .card-sheen::after{
+      content:"";
+      position:absolute;
+      top:-40%; left:-40%;
+      width:40%; height:180%;
+      background:linear-gradient(120deg, transparent, rgba(255,255,255,.18), transparent);
+      transform:translateX(-120%);
+      opacity:.35;
+      pointer-events:none;
+    }
+    .card-sheen:hover::after{ animation: sheen 1.9s ease-in-out; }
+
+    /* Skrolbar decent */
+    ::-webkit-scrollbar{ width: 10px; }
+    ::-webkit-scrollbar-thumb{ background: rgba(255,255,255,.10); border-radius: 999px; }
+    .light ::-webkit-scrollbar-thumb{ background: rgba(0,0,0,.18); }
+  </style>
+</head>
+
+<body class="h-full bg-zinc-950 text-zinc-100 dark" id="top">
+  <!-- Pozadí (gradient + světelné skvrny) -->
+  <div class="grain relative min-h-screen overflow-hidden">
+    <div class="pointer-events-none absolute inset-0 -z-10">
+      <div class="absolute -top-48 left-1/2 h-[520px] w-[520px] -translate-x-1/2 rounded-full blur-3xl opacity-25 bg-gradient-to-tr from-white/30 via-white/5 to-transparent animate-floaty"></div>
+      <div class="absolute -bottom-48 left-10 h-[520px] w-[520px] rounded-full blur-3xl opacity-15 bg-gradient-to-tr from-white/20 via-white/5 to-transparent"></div>
+      <div class="absolute top-24 right-10 h-[420px] w-[420px] rounded-full blur-3xl opacity-10 bg-gradient-to-tr from-white/15 via-white/5 to-transparent"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="sticky top-0 z-40 backdrop-blur supports-[backdrop-filter]:bg-zinc-950/55 bg-zinc-950/75 border-b border-white/10">
+      <div class="mx-auto max-w-6xl px-4 sm:px-6">
+        <div class="flex items-center justify-between py-3">
+          <a href="#top" class="group inline-flex items-baseline gap-2">
+            <span class="text-sm tracking-[.42em] uppercase text-white/70 group-hover:text-white/90 transition">BURGIO</span>
+            <span class="text-xs text-white/40">•</span>
+            <span class="text-xs text-white/50">signatura kvality</span>
+          </a>
+
+          <nav class="hidden md:flex items-center gap-6 text-sm text-white/70">
+            <a class="hover:text-white transition" href="#manifest">Manifest</a>
+            <a class="hover:text-white transition" href="#work">Výběr</a>
+            <a class="hover:text-white transition" href="#system">Systém</a>
+            <a class="hover:text-white transition" href="#contact">Kontakt</a>
+          </nav>
+
+          <div class="flex items-center gap-2">
+            <button id="modeBtn" class="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/5 px-3 py-2 text-xs text-white/80 hover:bg-white/10 transition" aria-label="Přepnout vzhled">
+              <span id="modeDot" class="h-2 w-2 rounded-full bg-white/70"></span>
+              <span id="modeLabel">Tmavý režim</span>
+            </button>
+            <a href="#contact" class="hidden sm:inline-flex rounded-xl bg-white text-zinc-950 px-3 py-2 text-xs font-medium hover:opacity-90 transition shadow-soft">Zanechat stopu</a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Hero -->
+    <main class="mx-auto max-w-6xl px-4 sm:px-6">
+      <section class="pt-16 sm:pt-20 pb-14 sm:pb-16">
+        <div class="grid lg:grid-cols-12 gap-10 items-end">
+          <div class="lg:col-span-7">
+            <div class="inline-flex items-center gap-3 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-xs text-white/70">
+              <span class="h-2 w-2 rounded-full bg-white/70"></span>
+              <span>Studio • Systémy • Kurátorství</span>
+            </div>
+
+            <h1 class="mt-6 text-4xl sm:text-5xl lg:text-6xl font-semibold leading-[1.02] tracking-tight animate-fadeUp">
+              Tichá značka,
+              <span class="text-white/70">která dělá z věcí jistotu.</span>
+            </h1>
+
+            <p class="mt-5 text-base sm:text-lg text-white/70 max-w-2xl">
+              BURGIO je signatura kvality. Ne křik — disciplína. Ne trendy — dlouhá životnost.
+              Stavíme značky, weby a systémy tak, aby vypadaly a fungovaly skvěle i za 10 let.
+            </p>
+
+            <div class="mt-8 flex flex-wrap gap-3">
+              <a href="#work" class="rounded-xl bg-white text-zinc-950 px-5 py-3 text-sm font-medium hover:opacity-90 transition shadow-soft">Prohlédnout výběr</a>
+              <a href="#manifest" class="rounded-xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white/85 hover:bg-white/10 transition">Číst manifest</a>
+            </div>
+
+            <div class="mt-10 grid grid-cols-3 gap-3 max-w-xl">
+              <div class="rounded-xl border border-white/10 bg-white/5 p-4">
+                <div class="text-xs text-white/50">Princip</div>
+                <div class="mt-1 text-sm">Méně, ale lepší</div>
+              </div>
+              <div class="rounded-xl border border-white/10 bg-white/5 p-4">
+                <div class="text-xs text-white/50">Měřítko</div>
+                <div class="mt-1 text-sm">Od 1 stránky po ekosystém</div>
+              </div>
+              <div class="rounded-xl border border-white/10 bg-white/5 p-4">
+                <div class="text-xs text-white/50">Cíl</div>
+                <div class="mt-1 text-sm">Důvěra na první pohled</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="lg:col-span-5">
+            <div class="rounded-2xl border border-white/10 bg-gradient-to-b from-white/10 to-white/5 p-6 shadow-glow card-sheen">
+              <div class="flex items-start justify-between gap-4">
+                <div>
+                  <div class="text-xs tracking-[.32em] uppercase text-white/60">Burgio signatura</div>
+                  <div class="mt-2 text-xl font-semibold">Created by BURGIO</div>
+                  <p class="mt-2 text-sm text-white/65">Používej BURGIO jako pečeť: web, produkt, systém, služba. Jedna značka. Jedna důvěra.</p>
+                </div>
+                <span class="rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs text-white/70">v1</span>
+              </div>
+
+              <div class="mt-6 grid gap-3">
+                <div class="rounded-xl border border-white/10 bg-white/5 p-4">
+                  <div class="text-xs text-white/55">Co BURGIO dělá</div>
+                  <div class="mt-1 text-sm">Zklidní chaos → vytvoří systém → dá mu tvář.</div>
+                </div>
+                <div class="rounded-xl border border-white/10 bg-white/5 p-4">
+                  <div class="text-xs text-white/55">Co BURGIO nedělá</div>
+                  <div class="mt-1 text-sm">Nevyrábí šum. Nepřidává balast. Nehraje si na trendy.</div>
+                </div>
+              </div>
+
+              <div class="mt-6 flex flex-wrap gap-2 text-xs text-white/60">
+                <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1">design</span>
+                <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1">UX</span>
+                <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1">systémy</span>
+                <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1">brand</span>
+                <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1">kurátor</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Manifest -->
+      <section id="manifest" class="py-16 border-t border-white/10">
+        <div class="grid lg:grid-cols-12 gap-10">
+          <div class="lg:col-span-4">
+            <h2 class="text-2xl sm:text-3xl font-semibold">Manifest</h2>
+            <p class="mt-3 text-sm text-white/65">Krátké zásady. Bez keců. BURGIO má být čitelné jako podpis.</p>
+          </div>
+          <div class="lg:col-span-8">
+            <div class="grid sm:grid-cols-2 gap-4">
+              <div class="rounded-2xl border border-white/10 bg-white/5 p-6 card-sheen">
+                <div class="text-xs tracking-[.28em] uppercase text-white/55">01</div>
+                <div class="mt-2 text-lg font-semibold">Ticho je luxus</div>
+                <p class="mt-2 text-sm text-white/65">Nech prostor dýchat. Když je vše důležité, není důležité nic.</p>
+              </div>
+              <div class="rounded-2xl border border-white/10 bg-white/5 p-6 card-sheen">
+                <div class="text-xs tracking-[.28em] uppercase text-white/55">02</div>
+                <div class="mt-2 text-lg font-semibold">Důvěra na první pohled</div>
+                <p class="mt-2 text-sm text-white/65">Layout, typografie, rytmus. Vypadá to správně, protože to je správně.</p>
+              </div>
+              <div class="rounded-2xl border border-white/10 bg-white/5 p-6 card-sheen">
+                <div class="text-xs tracking-[.28em] uppercase text-white/55">03</div>
+                <div class="mt-2 text-lg font-semibold">Systém & disciplína</div>
+                <p class="mt-2 text-sm text-white/65">Jedna pravidla. Jeden jazyk. Bez improvizací, které bolí za měsíc.</p>
+              </div>
+              <div class="rounded-2xl border border-white/10 bg-white/5 p-6 card-sheen">
+                <div class="text-xs tracking-[.28em] uppercase text-white/55">04</div>
+                <div class="mt-2 text-lg font-semibold">Dlouhá životnost</div>
+                <p class="mt-2 text-sm text-white/65">Trendy stárnou. Dobré proporce ne. BURGIO míří na roky.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Work / Selection -->
+      <section id="work" class="py-16 border-t border-white/10">
+        <div class="flex items-end justify-between gap-6 flex-wrap">
+          <div>
+            <h2 class="text-2xl sm:text-3xl font-semibold">Výběr</h2>
+            <p class="mt-3 text-sm text-white/65">Místo portfolia: výkladní skříň. Sem si později doplníš reálné projekty.</p>
+          </div>
+          <div class="text-xs text-white/55">Tip: každý blok je „karta projektu“</div>
+        </div>
+
+        <div class="mt-8 grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <article class="rounded-2xl border border-white/10 bg-white/5 p-6 shadow-soft card-sheen">
+            <div class="flex items-start justify-between gap-3">
+              <div>
+                <div class="text-xs text-white/50">Kategorie</div>
+                <div class="mt-1 font-semibold">Brand & UI systém</div>
+              </div>
+              <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/65">ready</span>
+            </div>
+            <p class="mt-3 text-sm text-white/65">Jednotná identita napříč webem, aplikací a obsahem. Bez šumu. S řádem.</p>
+            <div class="mt-5 flex items-center justify-between">
+              <span class="text-xs text-white/55">Burgio Selection</span>
+              <span class="text-xs text-white/45">—</span>
+            </div>
+          </article>
+
+          <article class="rounded-2xl border border-white/10 bg-white/5 p-6 shadow-soft card-sheen">
+            <div class="flex items-start justify-between gap-3">
+              <div>
+                <div class="text-xs text-white/50">Kategorie</div>
+                <div class="mt-1 font-semibold">Jednostránkový web</div>
+              </div>
+              <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/65">fast</span>
+            </div>
+            <p class="mt-3 text-sm text-white/65">Tichý landing, který prodává důvěrou. Vhodné pro domény, značky, MVP.</p>
+            <div class="mt-5 flex items-center justify-between">
+              <span class="text-xs text-white/55">Minimal • Premium</span>
+              <span class="text-xs text-white/45">—</span>
+            </div>
+          </article>
+
+          <article class="rounded-2xl border border-white/10 bg-white/5 p-6 shadow-soft card-sheen">
+            <div class="flex items-start justify-between gap-3">
+              <div>
+                <div class="text-xs text-white/50">Kategorie</div>
+                <div class="mt-1 font-semibold">Ekosystém stránek</div>
+              </div>
+              <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/65">scale</span>
+            </div>
+            <p class="mt-3 text-sm text-white/65">Navigace, filtry, výpisy, detail. Struktura, která se nerozpadne na 1000 stránkách.</p>
+            <div class="mt-5 flex items-center justify-between">
+              <span class="text-xs text-white/55">UX • IA • výkon</span>
+              <span class="text-xs text-white/45">—</span>
+            </div>
+          </article>
+
+          <article class="rounded-2xl border border-white/10 bg-white/5 p-6 shadow-soft card-sheen">
+            <div class="flex items-start justify-between gap-3">
+              <div>
+                <div class="text-xs text-white/50">Kategorie</div>
+                <div class="mt-1 font-semibold">Kurátorský výběr</div>
+              </div>
+              <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/65">curate</span>
+            </div>
+            <p class="mt-3 text-sm text-white/65">„Jen to nejlepší.“ Výběr, který zvedá hodnotu značek i produktů.</p>
+            <div class="mt-5 flex items-center justify-between">
+              <span class="text-xs text-white/55">Selection • Trust</span>
+              <span class="text-xs text-white/45">—</span>
+            </div>
+          </article>
+
+          <article class="rounded-2xl border border-white/10 bg-white/5 p-6 shadow-soft card-sheen">
+            <div class="flex items-start justify-between gap-3">
+              <div>
+                <div class="text-xs text-white/50">Kategorie</div>
+                <div class="mt-1 font-semibold">Design audit</div>
+              </div>
+              <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/65">clean</span>
+            </div>
+            <p class="mt-3 text-sm text-white/65">Odhalí šum, opraví hierarchii a rytmus. Z webu udělá důvěryhodný objekt.</p>
+            <div class="mt-5 flex items-center justify-between">
+              <span class="text-xs text-white/55">Fix • polish</span>
+              <span class="text-xs text-white/45">—</span>
+            </div>
+          </article>
+
+          <article class="rounded-2xl border border-white/10 bg-white/5 p-6 shadow-soft card-sheen">
+            <div class="flex items-start justify-between gap-3">
+              <div>
+                <div class="text-xs text-white/50">Kategorie</div>
+                <div class="mt-1 font-semibold">Systém obsahu</div>
+              </div>
+              <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/65">engine</span>
+            </div>
+            <p class="mt-3 text-sm text-white/65">Jednotné bloky, pravidla, tokeny. Vydrží růst bez přepisování.</p>
+            <div class="mt-5 flex items-center justify-between">
+              <span class="text-xs text-white/55">Rules • tokens</span>
+              <span class="text-xs text-white/45">—</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- System -->
+      <section id="system" class="py-16 border-t border-white/10">
+        <div class="grid lg:grid-cols-12 gap-10">
+          <div class="lg:col-span-5">
+            <h2 class="text-2xl sm:text-3xl font-semibold">Systém BURGIO</h2>
+            <p class="mt-3 text-sm text-white/65">Když neexistují pravidla, vznikne bordel. BURGIO stojí na malém počtu pevných principů.</p>
+
+            <div class="mt-6 rounded-2xl border border-white/10 bg-white/5 p-6">
+              <div class="text-xs tracking-[.28em] uppercase text-white/55">Pravidla</div>
+              <ul class="mt-3 space-y-3 text-sm text-white/70">
+                <li class="flex gap-3"><span class="mt-[7px] h-1.5 w-1.5 rounded-full bg-white/70"></span><span>1 akcentní barva max (v BURGIO teď záměrně skoro žádná).</span></li>
+                <li class="flex gap-3"><span class="mt-[7px] h-1.5 w-1.5 rounded-full bg-white/70"></span><span>Typografie je král. Kontrast je královna.</span></li>
+                <li class="flex gap-3"><span class="mt-[7px] h-1.5 w-1.5 rounded-full bg-white/70"></span><span>Každý blok musí mít důvod existovat.</span></li>
+                <li class="flex gap-3"><span class="mt-[7px] h-1.5 w-1.5 rounded-full bg-white/70"></span><span>Rytmus: stejné rozestupy, stejné rohy, stejné stíny.</span></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="lg:col-span-7">
+            <div class="grid sm:grid-cols-2 gap-4">
+              <div class="rounded-2xl border border-white/10 bg-white/5 p-6 card-sheen">
+                <div class="text-xs text-white/50">Token</div>
+                <div class="mt-1 font-semibold">Radius</div>
+                <p class="mt-2 text-sm text-white/65">Zaoblení je konzistentní: 20px (2xl). Vypadá klidně a prémiově.</p>
+              </div>
+              <div class="rounded-2xl border border-white/10 bg-white/5 p-6 card-sheen">
+                <div class="text-xs text-white/50">Token</div>
+                <div class="mt-1 font-semibold">Stín</div>
+                <p class="mt-2 text-sm text-white/65">Měkký stín bez agresivních hran. Objekt je „fyzický“.</p>
+              </div>
+              <div class="rounded-2xl border border-white/10 bg-white/5 p-6 card-sheen">
+                <div class="text-xs text-white/50">Token</div>
+                <div class="mt-1 font-semibold">Kontrast</div>
+                <p class="mt-2 text-sm text-white/65">Text musí být čitelný i v únavě. Kontrast je důvěra.</p>
+              </div>
+              <div class="rounded-2xl border border-white/10 bg-white/5 p-6 card-sheen">
+                <div class="text-xs text-white/50">Token</div>
+                <div class="mt-1 font-semibold">Ticho</div>
+                <p class="mt-2 text-sm text-white/65">Méně prvků. Víc prostoru. Méně slov. Víc významu.</p>
+              </div>
+            </div>
+
+            <div class="mt-4 rounded-2xl border border-white/10 bg-gradient-to-b from-white/10 to-white/5 p-6 shadow-glow">
+              <div class="flex items-start justify-between gap-4">
+                <div>
+                  <div class="text-xs tracking-[.28em] uppercase text-white/55">Použití</div>
+                  <div class="mt-2 text-lg font-semibold">„Powered by BURGIO“</div>
+                  <p class="mt-2 text-sm text-white/65">Vložíš do patičky projektů jako tichou pečeť. Bez vysvětlování.</p>
+                </div>
+                <button id="copyBadge" class="rounded-xl border border-white/15 bg-white/5 px-4 py-2 text-xs text-white/85 hover:bg-white/10 transition">Kopírovat podpis</button>
+              </div>
+              <pre id="badgeText" class="mt-4 rounded-xl border border-white/10 bg-zinc-950/60 p-4 text-xs text-white/70 overflow-x-auto">Powered by BURGIO</pre>
+              <div id="copyToast" class="mt-3 hidden text-xs text-white/60">Zkopírováno do schránky.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact -->
+      <section id="contact" class="py-16 border-t border-white/10">
+        <div class="grid lg:grid-cols-12 gap-10 items-start">
+          <div class="lg:col-span-5">
+            <h2 class="text-2xl sm:text-3xl font-semibold">Kontakt</h2>
+            <p class="mt-3 text-sm text-white/65">Ne „poptejte mě“. Spíš: pošli mi směr a já z toho udělám systém.</p>
+
+            <div class="mt-6 rounded-2xl border border-white/10 bg-white/5 p-6">
+              <div class="text-xs tracking-[.28em] uppercase text-white/55">Rychlá zpráva</div>
+              <p class="mt-2 text-sm text-white/70">Zatím je kontakt schválně minimalistický. Až budeš chtít, napojíme formulář.</p>
+              <div class="mt-4 text-sm text-white/70">
+                <div class="text-xs text-white/50">E-mail</div>
+                <div class="mt-1">info@burgio.cz</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="lg:col-span-7">
+            <form class="rounded-2xl border border-white/10 bg-gradient-to-b from-white/10 to-white/5 p-6 shadow-glow" onsubmit="return fakeSend(event)">
+              <div class="grid sm:grid-cols-2 gap-4">
+                <label class="block">
+                  <span class="text-xs text-white/55">Jméno</span>
+                  <input required class="mt-2 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-white/35 focus:border-white/25 focus:bg-white/10 transition" placeholder="Jak ti říkat" />
+                </label>
+                <label class="block">
+                  <span class="text-xs text-white/55">E-mail</span>
+                  <input required type="email" class="mt-2 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-white/35 focus:border-white/25 focus:bg-white/10 transition" placeholder="kam odpovědět" />
+                </label>
+              </div>
+              <label class="block mt-4">
+                <span class="text-xs text-white/55">Co budujeme</span>
+                <textarea required rows="5" class="mt-2 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-white/35 focus:border-white/25 focus:bg-white/10 transition" placeholder="1) co to je  2) pro koho  3) co má být výsledkem"></textarea>
+              </label>
+              <div class="mt-5 flex flex-wrap items-center gap-3 justify-between">
+                <div class="text-xs text-white/55">Odeslání je teď demo (bez backendu).</div>
+                <button class="rounded-xl bg-white text-zinc-950 px-5 py-3 text-sm font-medium hover:opacity-90 transition shadow-soft">Odeslat</button>
+              </div>
+              <div id="sentToast" class="mt-4 hidden text-sm text-white/70">Hotovo. Teď to jen napojíme na e-mail / databázi.</div>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer class="py-10 border-t border-white/10">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-sm">
+          <div class="text-white/60">© <span id="year"></span> BURGIO • signatura kvality</div>
+          <div class="flex items-center gap-4 text-white/60">
+            <a class="hover:text-white transition" href="#top">Nahoru</a>
+            <span class="text-white/30">•</span>
+            <span class="text-white/50">Powered by BURGIO</span>
+          </div>
+        </div>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    // ========== Dark/Light režim (bez knihoven) ==========
+    const root = document.documentElement;
+    const btn = document.getElementById('modeBtn');
+    const label = document.getElementById('modeLabel');
+    const dot = document.getElementById('modeDot');
+
+    function applyMode(mode){
+      const isDark = mode === 'dark';
+      if(isDark){
+        root.classList.add('dark');
+        document.body.classList.remove('light');
+        document.body.classList.add('bg-zinc-950','text-zinc-100');
+        document.body.classList.remove('bg-zinc-50','text-zinc-950');
+        label.textContent = 'Tmavý režim';
+        dot.className = 'h-2 w-2 rounded-full bg-white/70';
+      }else{
+        root.classList.remove('dark');
+        document.body.classList.add('light');
+        document.body.classList.remove('bg-zinc-950','text-zinc-100');
+        document.body.classList.add('bg-zinc-50','text-zinc-950');
+        label.textContent = 'Světlý režim';
+        dot.className = 'h-2 w-2 rounded-full bg-zinc-900/70';
+      }
+      localStorage.setItem('burgio_mode', mode);
+
+      // Upravení sticky headeru pro light
+      const header = document.querySelector('header');
+      if(mode === 'light'){
+        header.classList.remove('bg-zinc-950/75','supports-[backdrop-filter]:bg-zinc-950/55','border-white/10');
+        header.classList.add('bg-white/70','supports-[backdrop-filter]:bg-white/55','border-black/10');
+        header.querySelectorAll('a, nav a').forEach(a=>a.classList.add('text-zinc-700'));
+      }else{
+        header.classList.add('bg-zinc-950/75','supports-[backdrop-filter]:bg-zinc-950/55','border-white/10');
+        header.classList.remove('bg-white/70','supports-[backdrop-filter]:bg-white/55','border-black/10');
+        header.querySelectorAll('a, nav a').forEach(a=>a.classList.remove('text-zinc-700'));
+      }
+
+      // Přepnutí textů na light (jemné)
+      document.querySelectorAll('[data-light]');
+    }
+
+    const saved = localStorage.getItem('burgio_mode');
+    if(saved === 'light' || saved === 'dark') applyMode(saved);
+    else applyMode('dark');
+
+    btn.addEventListener('click', () => {
+      const now = root.classList.contains('dark') ? 'dark' : 'light';
+      applyMode(now === 'dark' ? 'light' : 'dark');
+    });
+
+    // ========== Kopírování podpisu ==========
+    const copyBtn = document.getElementById('copyBadge');
+    const badgeText = document.getElementById('badgeText');
+    const copyToast = document.getElementById('copyToast');
+
+    copyBtn.addEventListener('click', async () => {
+      try{
+        await navigator.clipboard.writeText(badgeText.textContent.trim());
+        copyToast.classList.remove('hidden');
+        setTimeout(()=>copyToast.classList.add('hidden'), 1400);
+      }catch(e){
+        copyToast.textContent = 'Nepodařilo se zkopírovat (prohlížeč).';
+        copyToast.classList.remove('hidden');
+        setTimeout(()=>{copyToast.classList.add('hidden'); copyToast.textContent='Zkopírováno do schránky.';}, 1800);
+      }
+    });
+
+    // ========== Demo odeslání ==========
+    function fakeSend(e){
+      e.preventDefault();
+      document.getElementById('sentToast').classList.remove('hidden');
+      setTimeout(()=>document.getElementById('sentToast').classList.add('hidden'), 1800);
+      e.target.reset();
+      return false;
+    }
+
+    // ========== Rok ==========
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
