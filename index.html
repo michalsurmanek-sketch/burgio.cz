@@ -73,6 +73,35 @@
     ::-webkit-scrollbar{ width: 10px; }
     ::-webkit-scrollbar-thumb{ background: rgba(255,255,255,.10); border-radius: 999px; }
     .light ::-webkit-scrollbar-thumb{ background: rgba(0,0,0,.18); }
+
+    /* Light mode — přemapování Tailwind „white/..“ utility tříd (bez přepisování HTML) */
+    .light [class~="text-white/90"]{ color: rgba(24,24,27,.90) !important; }
+    .light [class~="text-white/85"]{ color: rgba(24,24,27,.85) !important; }
+    .light [class~="text-white/80"]{ color: rgba(24,24,27,.80) !important; }
+    .light [class~="text-white/70"]{ color: rgba(24,24,27,.70) !important; }
+    .light [class~="text-white/65"]{ color: rgba(24,24,27,.65) !important; }
+    .light [class~="text-white/60"]{ color: rgba(24,24,27,.60) !important; }
+    .light [class~="text-white/55"]{ color: rgba(24,24,27,.55) !important; }
+    .light [class~="text-white/50"]{ color: rgba(24,24,27,.50) !important; }
+    .light [class~="text-white/45"]{ color: rgba(24,24,27,.45) !important; }
+    .light [class~="text-white/40"]{ color: rgba(24,24,27,.40) !important; }
+    .light [class~="text-white/30"]{ color: rgba(24,24,27,.30) !important; }
+
+    .light [class~="bg-white/15"]{ background-color: rgba(0,0,0,.08) !important; }
+    .light [class~="bg-white/10"]{ background-color: rgba(0,0,0,.06) !important; }
+    .light [class~="bg-white/5"]{  background-color: rgba(0,0,0,.035) !important; }
+
+    .light [class~="border-white/15"]{ border-color: rgba(0,0,0,.16) !important; }
+    .light [class~="border-white/10"]{ border-color: rgba(0,0,0,.12) !important; }
+
+    /* Pre block (badge) měl v dark bg-zinc-950/60 -> v light musí být světlý */
+    .light [class~="bg-zinc-950/60"]{ background-color: rgba(255,255,255,.78) !important; }
+
+    /* Fokus v light */
+    .light :focus-visible{ outline-color: rgba(0,0,0,.35) !important; }
+
+    /* Zrno v light — méně a jiný blend */
+    .light .grain::before{ mix-blend-mode:multiply; opacity:.06; }
   </style>
 </head>
 
@@ -465,21 +494,6 @@
         dot.className = 'h-2 w-2 rounded-full bg-zinc-900/70';
       }
       localStorage.setItem('burgio_mode', mode);
-
-      // Upravení sticky headeru pro light
-      const header = document.querySelector('header');
-      if(mode === 'light'){
-        header.classList.remove('bg-zinc-950/75','supports-[backdrop-filter]:bg-zinc-950/55','border-white/10');
-        header.classList.add('bg-white/70','supports-[backdrop-filter]:bg-white/55','border-black/10');
-        header.querySelectorAll('a, nav a').forEach(a=>a.classList.add('text-zinc-700'));
-      }else{
-        header.classList.add('bg-zinc-950/75','supports-[backdrop-filter]:bg-zinc-950/55','border-white/10');
-        header.classList.remove('bg-white/70','supports-[backdrop-filter]:bg-white/55','border-black/10');
-        header.querySelectorAll('a, nav a').forEach(a=>a.classList.remove('text-zinc-700'));
-      }
-
-      // Přepnutí textů na light (jemné)
-      document.querySelectorAll('[data-light]');
     }
 
     const saved = localStorage.getItem('burgio_mode');
