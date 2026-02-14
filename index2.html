@@ -1,0 +1,535 @@
+<!doctype html>
+<html lang="cs" class="h-full">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AO Ecosystem — Showroom projektů</title>
+  <meta name="description" content="AO Ecosystem — prémiový showroom projektů AO. Vyhledávání, filtry, režimy Návštěvník/Investor/Partner a prokliky na všechny weby." />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          boxShadow: {
+            soft: '0 18px 60px rgba(0,0,0,.14)',
+            glow: '0 0 0 1px rgba(255,255,255,.08), 0 18px 60px rgba(0,0,0,.35)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    html, body { font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+    .grain:before{
+      content:""; position:absolute; inset:0;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.18'/%3E%3C/svg%3E");
+      mix-blend-mode: overlay; opacity:.18; pointer-events:none; border-radius: inherit;
+    }
+    .line-clamp-2{ display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+    .no-scrollbar::-webkit-scrollbar{ display:none; }
+    .no-scrollbar{ -ms-overflow-style:none; scrollbar-width:none; }
+  </style>
+</head>
+
+<body class="h-full bg-white text-zinc-950 dark:bg-zinc-950 dark:text-zinc-50">
+  <script>
+    (function initTheme(){
+      const saved = localStorage.getItem('ao_theme');
+      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const dark = saved ? saved === 'dark' : prefersDark;
+      document.documentElement.classList.toggle('dark', dark);
+    })();
+  </script>
+
+  <!-- Background -->
+  <div class="fixed inset-0 -z-10">
+    <div class="absolute inset-0 bg-[radial-gradient(900px_600px_at_20%_10%,rgba(0,0,0,.06),transparent_60%),radial-gradient(800px_600px_at_80%_20%,rgba(0,0,0,.05),transparent_55%),radial-gradient(900px_700px_at_50%_90%,rgba(0,0,0,.05),transparent_60%)] dark:bg-[radial-gradient(900px_600px_at_20%_10%,rgba(255,255,255,.08),transparent_60%),radial-gradient(800px_600px_at_80%_20%,rgba(255,255,255,.06),transparent_55%),radial-gradient(900px_700px_at_50%_90%,rgba(255,255,255,.06),transparent_60%)]"></div>
+    <div class="absolute inset-0 opacity-[0.45] dark:opacity-[0.55]" style="background:linear-gradient(135deg, rgba(59,130,246,.08), rgba(168,85,247,.06), rgba(20,184,166,.05));"></div>
+  </div>
+
+  <!-- Header -->
+  <header class="sticky top-0 z-40 backdrop-blur-xl bg-white/65 dark:bg-zinc-950/55 border-b border-zinc-200/60 dark:border-white/10">
+    <div class="mx-auto max-w-7xl px-4 py-3 flex items-center gap-3">
+      <div class="flex items-center gap-3 min-w-0">
+        <div class="w-10 h-10 rounded-2xl bg-zinc-900 text-white dark:bg-white dark:text-zinc-950 grid place-items-center shadow-soft">
+          <span class="font-black tracking-tight">AO</span>
+        </div>
+        <div class="min-w-0">
+          <div class="font-extrabold tracking-tight leading-tight">AO Ecosystem</div>
+          <div class="text-xs text-zinc-500 dark:text-zinc-400 -mt-0.5">Showroom • filtry • režimy • 1 klik</div>
+        </div>
+      </div>
+
+      <div class="ml-auto flex items-center gap-2">
+        <button id="themeBtn"
+                class="px-3 py-2 rounded-xl text-sm font-semibold border border-zinc-200/70 dark:border-white/10 hover:bg-zinc-900/5 dark:hover:bg-white/10 transition">
+          Přepnout režim
+        </button>
+        <a href="#all"
+           class="hidden sm:inline-flex px-4 py-2 rounded-xl text-sm font-semibold bg-zinc-900 text-white dark:bg-white dark:text-zinc-950 hover:opacity-90 transition shadow-soft">
+          Projekty
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-7xl px-4">
+
+    <!-- Hero -->
+    <section class="pt-10 sm:pt-14 pb-6">
+      <div class="relative overflow-hidden rounded-3xl border border-zinc-200/60 dark:border-white/10 bg-white/60 dark:bg-white/5 shadow-soft grain">
+        <div class="absolute inset-0 pointer-events-none">
+          <div class="absolute -top-24 -left-24 w-72 h-72 rounded-full blur-3xl opacity-30" style="background: rgba(59,130,246,.35);"></div>
+          <div class="absolute -bottom-24 -right-24 w-72 h-72 rounded-full blur-3xl opacity-25" style="background: rgba(168,85,247,.35);"></div>
+        </div>
+
+        <div class="relative p-6 sm:p-10">
+          <div class="flex flex-col lg:flex-row gap-10 items-start">
+            <div class="flex-1 min-w-0">
+              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold border border-zinc-200/70 dark:border-white/10 bg-white/70 dark:bg-white/5">
+                <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                AO ekosystém — živý seznam
+              </div>
+
+              <h1 class="mt-4 text-3xl sm:text-5xl font-black tracking-tight leading-[1.05]">
+                Prémiový rozcestník
+                <span class="text-zinc-600 dark:text-zinc-300">všech AO projektů</span>
+              </h1>
+
+              <p id="modeText" class="mt-4 text-zinc-600 dark:text-zinc-300 max-w-2xl">
+                — 
+              </p>
+
+              <!-- Mode switch -->
+              <div class="mt-6 flex flex-wrap items-center gap-2">
+                <div class="text-xs font-bold text-zinc-500 dark:text-zinc-400 mr-1">Režim:</div>
+                <div class="inline-flex rounded-2xl border border-zinc-200/70 dark:border-white/10 bg-white/70 dark:bg-white/5 p-1">
+                  <button class="modeBtn px-3 py-2 rounded-xl text-xs font-extrabold" data-mode="visitor">Návštěvník</button>
+                  <button class="modeBtn px-3 py-2 rounded-xl text-xs font-extrabold" data-mode="investor">Investor</button>
+                  <button class="modeBtn px-3 py-2 rounded-xl text-xs font-extrabold" data-mode="partner">Partner</button>
+                </div>
+
+                <a href="#featured"
+                   class="ml-auto inline-flex items-center justify-center px-5 py-3 rounded-2xl text-sm font-bold bg-zinc-900 text-white dark:bg-white dark:text-zinc-950 hover:opacity-90 transition shadow-soft">
+                  Vlajkové projekty
+                </a>
+              </div>
+
+              <div class="mt-7 grid grid-cols-2 sm:grid-cols-4 gap-3">
+                <div class="rounded-2xl border border-zinc-200/60 dark:border-white/10 bg-white/70 dark:bg-white/5 p-4">
+                  <div class="text-xs text-zinc-500 dark:text-zinc-400">Projektů</div>
+                  <div id="countTotal" class="mt-1 text-2xl font-extrabold">—</div>
+                </div>
+                <div class="rounded-2xl border border-zinc-200/60 dark:border-white/10 bg-white/70 dark:bg-white/5 p-4">
+                  <div class="text-xs text-zinc-500 dark:text-zinc-400">Kategorií</div>
+                  <div id="countCats" class="mt-1 text-2xl font-extrabold">—</div>
+                </div>
+                <div class="rounded-2xl border border-zinc-200/60 dark:border-white/10 bg-white/70 dark:bg-white/5 p-4">
+                  <div class="text-xs text-zinc-500 dark:text-zinc-400">Zobrazeno</div>
+                  <div id="shownCountTop" class="mt-1 text-2xl font-extrabold">—</div>
+                </div>
+                <div class="rounded-2xl border border-zinc-200/60 dark:border-white/10 bg-white/70 dark:bg-white/5 p-4">
+                  <div class="text-xs text-zinc-500 dark:text-zinc-400">Status</div>
+                  <div class="mt-1 text-2xl font-extrabold">Showroom</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Search + filters -->
+            <div class="w-full lg:w-[420px]">
+              <div class="rounded-3xl border border-zinc-200/60 dark:border-white/10 bg-white/70 dark:bg-white/5 p-5 shadow-soft">
+                <div class="text-sm font-extrabold tracking-tight">Vyhledat</div>
+
+                <div class="mt-3">
+                  <input id="search"
+                         type="text"
+                         placeholder="Hledej… (např. zahrada, start, mapa, voda)"
+                         class="w-full px-4 py-3 rounded-2xl bg-white dark:bg-zinc-950 border border-zinc-200/70 dark:border-white/10 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 dark:focus:ring-white/10">
+                </div>
+
+                <div class="mt-3 flex flex-wrap gap-2" id="chipWrap"></div>
+
+                <div class="mt-4 flex items-center justify-between gap-2">
+                  <button id="resetBtn"
+                          class="px-4 py-2 rounded-xl text-sm font-semibold border border-zinc-200/70 dark:border-white/10 hover:bg-zinc-900/5 dark:hover:bg-white/10 transition">
+                    Reset
+                  </button>
+
+                  <div class="text-xs text-zinc-500 dark:text-zinc-400">
+                    Tip: klikni na kategorii, nebo piš
+                  </div>
+                </div>
+              </div>
+
+              <div class="mt-4 rounded-3xl border border-zinc-200/60 dark:border-white/10 bg-white/70 dark:bg-white/5 p-5">
+                <div class="text-sm font-extrabold tracking-tight">Legenda</div>
+                <div class="mt-3 flex flex-wrap gap-2 text-xs">
+                  <span class="px-2.5 py-1 rounded-full font-bold border border-zinc-200/70 dark:border-white/10 bg-white/70 dark:bg-white/5">Kategorie</span>
+                  <span class="px-2.5 py-1 rounded-full font-black bg-emerald-600 text-white">LIVE</span>
+                  <span class="px-2.5 py-1 rounded-full font-black bg-amber-500 text-white">PROTOTYP</span>
+                  <span class="px-2.5 py-1 rounded-full font-black bg-zinc-700 text-white">VÝVOJ</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured -->
+    <section id="featured" class="py-6">
+      <div>
+        <h2 class="text-2xl sm:text-3xl font-black tracking-tight">Vlajkové projekty</h2>
+        <p class="mt-1 text-zinc-600 dark:text-zinc-300">Vždy nahoře — to, čím se chlubíš jako první.</p>
+      </div>
+      <div id="featuredGrid" class="mt-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+    </section>
+
+    <!-- All -->
+    <section id="all" class="py-8">
+      <div class="flex items-end justify-between gap-4">
+        <div>
+          <h2 class="text-2xl sm:text-3xl font-black tracking-tight">Všechny projekty</h2>
+          <p class="mt-1 text-zinc-600 dark:text-zinc-300">Seznam + filtry + režimy.</p>
+        </div>
+        <div class="text-sm text-zinc-500 dark:text-zinc-400">
+          Zobrazeno: <span id="shownCount" class="font-bold text-zinc-900 dark:text-zinc-50">—</span>
+        </div>
+      </div>
+
+      <div id="allGrid" class="mt-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+    </section>
+
+    <footer class="pb-10 pt-6 text-center">
+      <div class="mx-auto max-w-7xl">
+        <div class="rounded-3xl border border-zinc-200/60 dark:border-white/10 bg-white/60 dark:bg-white/5 p-6">
+          <div class="font-extrabold tracking-tight">AO Ecosystem</div>
+          <div class="mt-1 text-sm text-zinc-600 dark:text-zinc-300">Jedna stránka pro celý ekosystém.</div>
+          <div class="mt-4 text-xs text-zinc-500 dark:text-zinc-400">
+            © <span id="year"></span> AO • Prototyp • CZ
+          </div>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    // ===== DATA =====
+    // group = "AO Core / Marketplace / E-shop / Služby / Stavba / Gastro / Zdraví / Tech / B2B / Domény / Poptávky ..."
+    // status = "LIVE / PROTOTYP / VYVOJ"
+    // vibe = krátký štítek (např. Premium / Utility / Chaos / Calm / Luxe)
+    const projects = [
+      // Vlajkové
+      { name:"Zahradao", url:"https://zahradao.cz/", group:"E-shop", cat:"Rostliny", status:"LIVE", vibe:"Premium", featured:true,
+        desc:{
+          visitor:"Digitální zahrada — prohlížení a nákup rostlin v luxusním stylu.",
+          investor:"E-shop brand s prostorem pro škálování (katalog, obsah, objednávky).",
+          partner:"Napojení dodavatelů, affiliate, expanze katalogu a obsahu."
+        }
+      },
+      { name:"Startao", url:"https://startao.cz/", group:"AO Core", cat:"Startup balíčky", status:"PROTOTYP", vibe:"Core", featured:true,
+        desc:{
+          visitor:"Start balíčky pro podnikání — rychle a jednoduše.",
+          investor:"Produktizované služby s opakovatelným prodejem (balíčky).",
+          partner:"Spolupráce: weby, grafika, domény, fulfillment služeb."
+        }
+      },
+      { name:"Domenao", url:"https://domenao.cz/", group:"Domény", cat:"Katalog", status:"PROTOTYP", vibe:"Core", featured:true,
+        desc:{
+          visitor:"Katalog domén a projektů v ekosystému.",
+          investor:"Portfoliový hub — monetizace přes prodej/pronájem domén.",
+          partner:"Možnost partnerství na konkrétních doménách / vertikálách."
+        }
+      },
+      { name:"Mapao", url:"https://mapao.cz/", group:"Marketplace", cat:"Katalog služeb", status:"PROTOTYP", vibe:"Utility", featured:true,
+        desc:{
+          visitor:"Najdi firmy a služby na mapě — rychle a přehledně.",
+          investor:"Lokální discovery platforma (B2B listování, leady).",
+          partner:"Přidávání firem, obsahu, regionální kurátorství."
+        }
+      },
+      { name:"Herbao", url:"https://herbao.cz/", group:"Zdraví", cat:"Bylinky", status:"PROTOTYP", vibe:"Calm", featured:true,
+        desc:{
+          visitor:"Bylinky a přírodní věci — jednoduchý přístup.",
+          investor:"Obsah + produkty = dobrý základ pro brand monetizaci.",
+          partner:"Spolupráce: dodavatelé, články, balíčky, e-shop."
+        }
+      },
+
+      // Další projekty (doplňuj libovolně)
+      { name:"Reklamas", url:"https://reklamas.cz/", group:"Služby", cat:"Marketing", status:"VYVOJ", vibe:"Growth", featured:false,
+        desc:{ visitor:"Reklamní platforma (směr).", investor:"B2B monetizace přes kampaně/leady.", partner:"Prostor pro partnery a resellery." }
+      },
+      { name:"Rezervao", url:"https://rezervao.cz/", group:"Marketplace", cat:"Rezervace", status:"VYVOJ", vibe:"Utility", featured:false,
+        desc:{ visitor:"Rezervace a last-minute termíny.", investor:"Transakční model + provize.", partner:"Napojení provozoven a služeb." }
+      },
+      { name:"Vodao", url:"https://vodao.cz/", group:"Služby", cat:"Voda", status:"VYVOJ", vibe:"Utility", featured:false,
+        desc:{ visitor:"Voda a produkty na jednom místě.", investor:"Srovnávač/marketplace model.", partner:"Dodavatelé + regionální logistika." }
+      },
+      { name:"Chatao", url:"https://chatao.cz/", group:"Marketplace", cat:"Cestování", status:"VYVOJ", vibe:"Luxe", featured:false,
+        desc:{ visitor:"Chaty a chalupy — inspirace a výběr.", investor:"Provizní model, leady, premium listing.", partner:"Majitelé, správa, obsah." }
+      },
+      { name:"Fitnao", url:"https://fitnao.cz/", group:"Zdraví", cat:"Fitness", status:"VYVOJ", vibe:"Discipline", featured:false,
+        desc:{ visitor:"Fitness a redukce — obsah + produkty.", investor:"Brand + e-commerce + membership.", partner:"Trenéři, výživa, produkty." }
+      },
+      { name:"Vinao", url:"https://vinao.cz/", group:"Gastro", cat:"Víno", status:"VYVOJ", vibe:"Premium", featured:false,
+        desc:{ visitor:"Víno — výběr, inspirace, párování.", investor:"Affiliate + e-shop + obsah.", partner:"Vinařství, degustace, obsah." }
+      },
+      { name:"Ugrilujem", url:"https://ugrilujem.cz/", group:"Gastro", cat:"Grilování", status:"VYVOJ", vibe:"Fun", featured:false,
+        desc:{ visitor:"Recepty a grilovací výbava.", investor:"Obsahová monetizace + affiliate.", partner:"Značky, recenze, akce." }
+      },
+      { name:"Oknao", url:"https://oknao.cz/", group:"Stavba", cat:"Okna", status:"VYVOJ", vibe:"Utility", featured:false,
+        desc:{ visitor:"Okna — poptávky a realizace.", investor:"Leady pro řemeslníky a firmy.", partner:"Dodavatelé, montáže, nabídky." }
+      },
+      { name:"Stavbao", url:"https://stavbao.cz/", group:"Stavba", cat:"Stavby", status:"VYVOJ", vibe:"Utility", featured:false,
+        desc:{ visitor:"Stavba — poptávky, inspirace.", investor:"Lead-gen platforma.", partner:"Firmy, řemesla, katalog." }
+      },
+      { name:"Adresao", url:"https://adresao.cz/", group:"B2B", cat:"Virtuální adresa", status:"PROTOTYP", vibe:"Core", featured:false,
+        desc:{ visitor:"Virtuální adresa pro firmy.", investor:"Jednoduchý B2B produkt.", partner:"Spolupráce: účetní, právní, cowork." }
+      },
+      { name:"Firmao", url:"https://firmao.cz/", group:"B2B", cat:"Firemní profil", status:"VYVOJ", vibe:"Utility", featured:false,
+        desc:{ visitor:"Katalog firem a profilů.", investor:"Listing model + leady.", partner:"Import firem, regiony, obsah." }
+      },
+      { name:"Plotao", url:"https://plotao.cz/", group:"Stavba", cat:"Ploty", status:"VYVOJ", vibe:"Utility", featured:false,
+        desc:{ visitor:"Ploty — inspirace a realizace.", investor:"Leady + poptávky.", partner:"Montáže, výroba, prodej." }
+      },
+      { name:"PoptEJCenu", url:"https://poptejcenu.cz/", group:"Poptávky", cat:"Cenové poptávky", status:"PROTOTYP", vibe:"Utility", featured:false,
+        desc:{ visitor:"Poptávkový systém.", investor:"Lead-gen engine pro více vertikál.", partner:"Napojení dodavatelů a oborů." }
+      },
+      { name:"Webao", url:"https://webao.cz/", group:"Služby", cat:"Weby", status:"VYVOJ", vibe:"Core", featured:false,
+        desc:{ visitor:"Tvorba webů a šablony.", investor:"Produktizace webových služeb.", partner:"Dodavatelé, resell." }
+      },
+      { name:"Slevao", url:"https://slevao.cz/", group:"Marketplace", cat:"Srovnávač", status:"VYVOJ", vibe:"Chaos", featured:false,
+        desc:{ visitor:"Slevy a výběr.", investor:"Affiliate/srovnávač model.", partner:"E-shopy, feedy, promo." }
+      },
+      { name:"Mobilnisklad", url:"https://mobilnisklad.cz/", group:"Služby", cat:"Skladování", status:"VYVOJ", vibe:"Utility", featured:false,
+        desc:{ visitor:"Skladování a modulární řešení.", investor:"Pronájem + B2B.", partner:"Dodavatelé kontejnerů, logistika." }
+      },
+      { name:"DronaO", url:"https://dronao.cz/", group:"Tech", cat:"Drony", status:"VYVOJ", vibe:"Tech", featured:false,
+        desc:{ visitor:"Drony — služby a nabídky.", investor:"Trh služeb + leady.", partner:"Piloti, firmy, zakázky." }
+      },
+      { name:"Agroa", url:"https://agroa.cz/", group:"Agro", cat:"Agro", status:"VYVOJ", vibe:"Utility", featured:false,
+        desc:{ visitor:"Agro katalog a služby.", investor:"Lead-gen pro agro.", partner:"Dodavatelé, regiony." }
+      },
+      { name:"Betonao", url:"https://betonao.cz/", group:"Stavba", cat:"Beton", status:"VYVOJ", vibe:"Heavy", featured:false,
+        desc:{ visitor:"Betonové produkty a řešení.", investor:"B2B/B2C nabídka.", partner:"Výrobci, montáže, doprava." }
+      },
+      { name:"Bagetao", url:"https://bagetao.cz/", group:"Gastro", cat:"Bagety", status:"VYVOJ", vibe:"Fun", featured:false,
+        desc:{ visitor:"Street food brand.", investor:"Obsah + franchising směr.", partner:"Provozovny, dodavatelé." }
+      },
+      { name:"Farmao", url:"https://farmao.cz/", group:"Agro", cat:"Farma", status:"VYVOJ", vibe:"Calm", featured:false,
+        desc:{ visitor:"Farmářské produkty a katalog.", investor:"Marketplace/affiliate.", partner:"Farmy, dodavatelé." }
+      },
+      { name:"Gurmao", url:"https://gurmao.cz/", group:"Gastro", cat:"Restaurace", status:"VYVOJ", vibe:"Luxe", featured:false,
+        desc:{ visitor:"Kurátorovaný gastro výběr.", investor:"Premium listing + leady.", partner:"Restaurace, kurátoři." }
+      },
+    ];
+
+    // ===== MODE TEXT =====
+    const modeCopy = {
+      visitor: "Prohlédni si celý AO ekosystém jako showroom. Klikni na projekt a hned jsi uvnitř.",
+      investor: "Rychlý přehled vertikál, které lze škálovat: marketplace, e-shopy, lead-gen, obsahové brandy.",
+      partner:  "Najdi projekt, kde se dá napojit: dodavatelé, obsah, služby, affiliate, regionální expanze."
+    };
+
+    // ===== Helpers =====
+    const $ = (q)=>document.querySelector(q);
+    const year = new Date().getFullYear();
+    $('#year').textContent = year;
+
+    let mode = localStorage.getItem('ao_mode') || 'visitor';
+    let activeGroup = "Vše";
+    let query = "";
+
+    const groups = [...new Set(projects.map(p=>p.group))].sort((a,b)=>a.localeCompare(b,'cs'));
+    $('#countTotal').textContent = String(projects.length);
+    $('#countCats').textContent = String(groups.length);
+
+    function statusBadge(status){
+      const map = {
+        LIVE:   "bg-emerald-600 text-white",
+        PROTOTYP:"bg-amber-500 text-white",
+        VYVOJ:  "bg-zinc-700 text-white"
+      };
+      const cls = map[status] || "bg-zinc-700 text-white";
+      return `<span class="inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-black ${cls}">${status}</span>`;
+    }
+
+    function groupBadge(g){
+      return `
+        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-semibold
+          border border-zinc-200/70 dark:border-white/10 bg-white/70 dark:bg-white/5 text-zinc-700 dark:text-zinc-200">
+          ${g}
+        </span>
+      `;
+    }
+
+    function vibeBadge(v){
+      return `
+        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-black
+          bg-zinc-900 text-white dark:bg-white dark:text-zinc-950">
+          ${v}
+        </span>
+      `;
+    }
+
+    function iconForGroup(g){
+      const key = (g||"").toLowerCase();
+      if(key.includes("stav")) return "🧱";
+      if(key.includes("gastro")) return "🍽️";
+      if(key.includes("zdrav")) return "🌿";
+      if(key.includes("market")) return "🗺️";
+      if(key.includes("e-shop")) return "🛒";
+      if(key.includes("dom")) return "🔗";
+      if(key.includes("b2b")) return "🏢";
+      if(key.includes("tech")) return "⚡";
+      if(key.includes("agro")) return "🌾";
+      if(key.includes("popt")) return "📨";
+      return "✨";
+    }
+
+    function card(p, big=false){
+      const desc = (p.desc && p.desc[mode]) ? p.desc[mode] : (p.desc?.visitor || "");
+      return `
+        <a href="${p.url}" target="_blank" rel="noopener"
+           class="group relative overflow-hidden rounded-3xl border border-zinc-200/60 dark:border-white/10
+                  bg-white/70 dark:bg-white/5 p-5 shadow-soft hover:shadow-glow transition grain">
+          <div class="flex items-start gap-3">
+            <div class="w-11 h-11 rounded-2xl grid place-items-center font-black tracking-tight
+                        bg-zinc-900 text-white dark:bg-white dark:text-zinc-950">
+              <span aria-hidden="true">${iconForGroup(p.group)}</span>
+            </div>
+
+            <div class="min-w-0 flex-1">
+              <div class="flex items-start justify-between gap-3">
+                <div class="min-w-0">
+                  <div class="font-extrabold tracking-tight text-lg leading-tight truncate">
+                    ${p.name}.cz
+                  </div>
+
+                  <div class="mt-2 flex flex-wrap gap-2 items-center">
+                    ${groupBadge(p.group)}
+                    ${statusBadge(p.status)}
+                    ${p.vibe ? vibeBadge(p.vibe) : ""}
+                  </div>
+                </div>
+
+                <div class="shrink-0 text-zinc-400 group-hover:text-zinc-900 dark:group-hover:text-white transition">
+                  ↗
+                </div>
+              </div>
+
+              <p class="mt-3 text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed ${big ? "" : "line-clamp-2"}">
+                ${desc}
+              </p>
+
+              <div class="mt-4 text-xs text-zinc-500 dark:text-zinc-400 truncate">
+                ${p.url}
+              </div>
+            </div>
+          </div>
+        </a>
+      `;
+    }
+
+    function renderChips(){
+      const wrap = $('#chipWrap');
+      const chips = ["Vše", ...groups];
+      wrap.innerHTML = chips.map(g => `
+        <button data-group="${g}"
+          class="px-3 py-2 rounded-xl text-xs font-bold border transition
+          ${activeGroup===g
+            ? 'bg-zinc-900 text-white border-zinc-900 dark:bg-white dark:text-zinc-950 dark:border-white'
+            : 'border-zinc-200/70 dark:border-white/10 hover:bg-zinc-900/5 dark:hover:bg-white/10'}">
+          ${g}
+        </button>
+      `).join('');
+
+      [...wrap.querySelectorAll('button')].forEach(btn=>{
+        btn.addEventListener('click', ()=>{
+          activeGroup = btn.dataset.group;
+          renderAll();
+        });
+      });
+    }
+
+    function filterList(list){
+      const q = query.trim().toLowerCase();
+      return list.filter(p=>{
+        const inGroup = (activeGroup==="Vše") || (p.group===activeGroup);
+        const text = `${p.name} ${p.url} ${(p.cat||"")} ${JSON.stringify(p.desc||{})}`.toLowerCase();
+        const inQuery = !q || text.includes(q);
+        return inGroup && inQuery;
+      });
+    }
+
+    function renderFeatured(){
+      const list = projects.filter(p=>p.featured);
+      $('#featuredGrid').innerHTML = list.map(p=>card(p,true)).join('');
+    }
+
+    function renderAll(){
+      const list = filterList(projects);
+      $('#allGrid').innerHTML = list.map(p=>card(p,false)).join('');
+      $('#shownCount').textContent = String(list.length);
+      $('#shownCountTop').textContent = String(list.length);
+    }
+
+    function renderMode(){
+      // Mode buttons style
+      document.querySelectorAll('.modeBtn').forEach(b=>{
+        const on = b.dataset.mode === mode;
+        b.className = "modeBtn px-3 py-2 rounded-xl text-xs font-extrabold transition " + (on
+          ? "bg-zinc-900 text-white dark:bg-white dark:text-zinc-950"
+          : "text-zinc-600 dark:text-zinc-300 hover:bg-zinc-900/5 dark:hover:bg-white/10");
+      });
+      $('#modeText').textContent = modeCopy[mode] || modeCopy.visitor;
+      localStorage.setItem('ao_mode', mode);
+    }
+
+    // Init
+    renderChips();
+    renderFeatured();
+    renderMode();
+    renderAll();
+
+    // Search
+    $('#search').addEventListener('input', (e)=>{
+      query = e.target.value || "";
+      renderAll();
+    });
+
+    // Reset
+    $('#resetBtn').addEventListener('click', ()=>{
+      activeGroup = "Vše";
+      query = "";
+      $('#search').value = "";
+      renderChips();
+      renderAll();
+    });
+
+    // Theme
+    $('#themeBtn').addEventListener('click', ()=>{
+      const isDark = document.documentElement.classList.toggle('dark');
+      localStorage.setItem('ao_theme', isDark ? 'dark' : 'light');
+    });
+
+    // Mode switching
+    document.querySelectorAll('.modeBtn').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        mode = btn.dataset.mode;
+        renderMode();
+        renderAll();
+        renderFeatured();
+      });
+    });
+  </script>
+</body>
+</html>
