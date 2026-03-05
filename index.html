@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta name="color-scheme" content="light"/>
+  <title>AO Shop — Domů</title>
+  <meta name="description" content="Prémiový e‑shop (Amazon/Apple úroveň) – rozsekaný na soubory."/>
+  <link rel="stylesheet" href="assets/app.css"/>
+</head>
+<body data-page="home">
+
+  <!-- Header (sdílený) -->
+  <header class="header" id="top">
+    <div class="wrap">
+      <div class="header__row">
+        <a class="brand" href="index.html" aria-label="Domů">
+          <div class="brand__mark" aria-hidden="true"></div>
+          <div>
+            <div class="brand__name">AO SHOP</div>
+            <div class="brand__tag">Amazon/Apple úroveň • šablona</div>
+          </div>
+        </a>
+
+        <form class="search" role="search" id="searchForm">
+          <span aria-hidden="true">🔎</span>
+          <input id="q" name="q" type="search" placeholder="Hledej produkt (např. ‚Pro‘, ‚Max‘, ‚Eco‘)…" autocomplete="off"/>
+          <span class="kbd" title="Zkratka">Ctrl/⌘ K</span>
+        </form>
+
+        <nav class="nav" aria-label="Hlavní navigace">
+          <a class="btn" href="kategorie.html"><span aria-hidden="true">🧭</span> Kategorie</a>
+          <a class="btn" href="ucet.html"><span aria-hidden="true">👤</span> Účet</a>
+          <a class="btn btn--primary" href="kosik.html" id="cartBtn">
+            <span aria-hidden="true">🛒</span> Košík <span class="count" id="cartCount">0</span>
+          </a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page -->
+  <main class="main">
+    <div class="wrap" id="app" aria-live="polite"></div>
+
+    <!-- Footer (sdílený) -->
+    <div class="wrap footer">
+      <div class="footer__grid">
+        <div>
+          <div class="row">
+            <div class="brand" style="min-width:auto">
+              <div class="brand__mark" style="width:32px;height:32px;border-radius:12px"></div>
+              <div>
+                <div class="brand__name" style="font-size:14px">AO SHOP</div>
+                <div class="brand__tag">Rychlé, čisté, prodává</div>
+              </div>
+            </div>
+          </div>
+          <p class="small" style="margin:10px 0 0">Rozsekané na soubory: index.html, produkty.html, produkt.html, kosik.html, pokladna.html, ucet.html…</p>
+        </div>
+        <div class="card" style="background:rgba(255,255,255,.65)">
+          <div class="card__pad">
+            <div class="sectionTitle"><h2>Rychlé odkazy</h2><span class="small">Demo</span></div>
+            <div class="small" style="display:grid; gap:8px">
+              <a href="index.html">Domů</a>
+              <a href="kategorie.html">Kategorie</a>
+              <a href="produkty.html">Produkty</a>
+              <a href="kosik.html">Košík</a>
+              <a href="pokladna.html">Pokladna</a>
+            </div>
+          </div>
+        </div>
+        <div class="card" style="background:rgba(255,255,255,.65)">
+          <div class="card__pad">
+            <div class="sectionTitle"><h2>Garance</h2><span class="small">UX</span></div>
+            <div class="chips">
+              <span class="pill pill--b">⚡ Rychlé</span>
+              <span class="pill pill--g">🛡️ Důvěryhodné</span>
+              <span class="pill pill--y">✨ Prémiové</span>
+            </div>
+            <div class="small" style="margin-top:10px">Všechno je offline demo: košík běží přes localStorage.</div>
+          </div>
+        </div>
+      </div>
+      <div class="small" style="margin-top:14px">© 2026 AO Shop • Šablona pro AO projekty</div>
+    </div>
+  </main>
+
+  <div class="toast" id="toast"></div>
+
+  <!-- Quick view modal (sdílený) -->
+  <dialog class="modal" id="modal">
+    <div class="modal__panel" role="document">
+      <div class="modal__top row">
+        <div class="sectionTitle" style="margin:0">
+          <h2 id="mTitle">Rychlý náhled</h2>
+          <span class="small" id="mSub">Produkt</span>
+        </div>
+        <button class="btn" id="mClose" aria-label="Zavřít">✕</button>
+      </div>
+      <div class="modal__body" id="mBody"></div>
+    </div>
+  </dialog>
+
+  <script src="assets/app.js"></script>
+</body>
+</html>
