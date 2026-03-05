@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>AO Shop — Pokladna</title>
+  <link rel="stylesheet" href="assets/app.css"/>
+</head>
+<body data-page="checkout">
+  <header class="header" id="top">
+    <div class="wrap">
+      <div class="header__row">
+        <a class="brand" href="index.html"><div class="brand__mark" aria-hidden="true"></div><div><div class="brand__name">AO SHOP</div><div class="brand__tag">Amazon/Apple úroveň • šablona</div></div></a>
+        <form class="search" role="search" id="searchForm">
+          <span aria-hidden="true">🔎</span>
+          <input id="q" name="q" type="search" placeholder="Hledej produkt…" autocomplete="off"/>
+          <span class="kbd">Ctrl/⌘ K</span>
+        </form>
+        <nav class="nav">
+          <a class="btn" href="kategorie.html">🧭 Kategorie</a>
+          <a class="btn" href="ucet.html">👤 Účet</a>
+          <a class="btn btn--primary" href="kosik.html">🛒 Košík <span class="count" id="cartCount">0</span></a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="main">
+    <div class="wrap" id="app"></div>
+    <div class="wrap footer"><div class="small">© 2026 AO Shop</div></div>
+  </main>
+
+  <div class="toast" id="toast"></div>
+  <dialog class="modal" id="modal">
+    <div class="modal__panel" role="document">
+      <div class="modal__top row">
+        <div class="sectionTitle" style="margin:0"><h2 id="mTitle">Rychlý náhled</h2><span class="small" id="mSub">Produkt</span></div>
+        <button class="btn" id="mClose" aria-label="Zavřít">✕</button>
+      </div>
+      <div class="modal__body" id="mBody"></div>
+    </div>
+  </dialog>
+
+  <script src="assets/app.js"></script>
+</body>
+</html>
